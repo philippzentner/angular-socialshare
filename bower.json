@@ -29,5 +29,8 @@
     "gulpfile.js",
     "index.html",
     "assets"
-  ]
+  ],
+  "dependencies": {
+    "angular-socialshare": "angularjs-socialshare#^2.1.12"
+  }
 }

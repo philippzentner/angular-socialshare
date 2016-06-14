@@ -6,7 +6,7 @@
  * http://720kb.githb.io/angular-socialshare
  * 
  * MIT license
- * Fri Jun 10 2016
+ * Tue Jun 14 2016
  */
 /*global angular*/
 /*eslint no-loop-func:0, func-names:0*/
@@ -15,7 +15,7 @@
   'use strict';
 
   var directiveName = 'socialshare'
-    , socialshareProviderNames = ['facebook', 'twitter', 'reddit']
+    , socialshareProviderNames = ['facebook', 'facebook-messenger', 'twitter', 'reddit', 'whatsapp']
     , socialshareConfigurationProvider = /*@ngInject*/ function socialshareConfigurationProvider() {
 
       var socialshareConfigurationDefault = [
@@ -40,6 +40,12 @@
         }
       },
       {
+        'provider': 'facebook-messenger',
+        'conf': {
+          'url': ''
+        }
+      },
+      {
         'provider': 'twitter',
         'conf': {
           'url': '',
@@ -60,6 +66,13 @@
           'trigger': 'click',
           'popupHeight': 600,
           'popupWidth': 500
+        }
+      },
+      {
+        'provider': 'whatsapp',
+        'conf': {
+          'url': '',
+          'text': ''
         }
       }
       ];
@@ -288,6 +301,12 @@
           + ',top=' + ($window.innerHeight - attrs.socialsharePopupHeight) / 2 + ',left=' + ($window.innerWidth - attrs.socialsharePopupWidth) / 2);
       }
     }
+    , facebookMessengerShare = function facebookMessengerShare($window, $location, attrs, element) {
+
+      var href = 'fb-messenger://share?link=' + encodeURIComponent(attrs.socialshareUrl || $location.absUrl());
+
+      element.attr('href', href);
+    }
     , manageTwitterShare = function manageTwitterShare($window, $location, attrs) {
       var urlString = 'https://www.twitter.com/intent/tweet?';
 
@@ -337,12 +356,19 @@
         , 'Reddit', 'toolbar=0,status=0,resizable=yes,width=' + attrs.socialsharePopupWidth + ',height=' + attrs.socialsharePopupHeight
         + ',top=' + ($window.innerHeight - attrs.socialsharePopupHeight) / 2 + ',left=' + ($window.innerWidth - attrs.socialsharePopupWidth) / 2);
       }
+    , manageWhatsappShare = function manageWhatsappShare($window, $location, attrs, element) {
 
+      var href = 'whatsapp://send?text=' + encodeURIComponent(attrs.socialshareText + ' ') + encodeURIComponent(attrs.socialshareUrl || $location.absUrl());
 
+      element.attr('href', href);
+    }
     , sharingFunctions = {
-       'facebook': manageFacebookShare
+      'email': manageEmailShare
+      , 'facebook': manageFacebookShare
+      , 'facebook-messenger': facebookMessengerShare
       , 'twitter': manageTwitterShare
       , 'reddit': manageRedditShare
+      , 'whatsapp': manageWhatsappShare
     };
 
 
