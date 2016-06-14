@@ -364,8 +364,7 @@
       element.attr('href', href);
     }*/
     , sharingFunctions = {
-      'email': manageEmailShare
-      , 'facebook': manageFacebookShare
+       'facebook': manageFacebookShare
       , 'twitter': manageTwitterShare
       , 'reddit': manageRedditShare
       /*, 'facebook-messenger': facebookMessengerShare
